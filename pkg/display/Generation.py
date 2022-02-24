@@ -25,14 +25,13 @@ class Generation :
     def __init__(self, master, parameters : Dict[str, str]) -> None :
         Generation.instances_total_number += 1
         self.parameters = parameters
-
+        self.drawer = Drawer(self.canvas, self.parameters)
         self.__frame = self.__layout(master)
 
 
 
     def start(self) -> None :
         """Starts the generation : blocking until the end."""
-        self.drawer = Drawer(self.canvas, self.parameters)
         self.drawer.start()
 
 
@@ -95,6 +94,9 @@ class Generation :
 
     def __delete_generation(self) -> None :
         """Deletes the generation."""
+        self.drawer.permission = False
+        while self.drawer.is_working != False :
+            pass
         self.get_frame().destroy()
 
 

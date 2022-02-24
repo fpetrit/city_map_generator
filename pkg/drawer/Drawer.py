@@ -4,7 +4,7 @@ import random as ra, turtle as tu
 class Drawer:
     """
     Draw a randomly generated 2D town plan when start() is called (blocking function), on the given tkinter canvas and with the given parameters.
-    "turtle" module is used to draw.
+    "turtle" module is used to draw. Working principle : 
     """
 
     def __init__(self, canvas : Canvas, parameters : dict) -> None:
@@ -12,8 +12,17 @@ class Drawer:
         self.parameters = parameters
         self.ts = tu.TurtleScreen(canvas)
         self.turtle = tu.RawTurtle(self.ts)
-        
-    
+
+        """ 
+        'permission' helps to delete the generation properly especially when it has not finished its work. 
+        permission must be evaluated regularly, to stop working on the canvas, set 'is_working' to False,
+        and allow the destruction of the canvas if it is evaluated to False."""
+        self.permission = True
+        self.is_working = True
+
+        self.operations_list = []
+
+
 
     @staticmethod
     def get_random_tuple(x_min, x_max, y_min, y_max):

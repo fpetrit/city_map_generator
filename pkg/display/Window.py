@@ -245,7 +245,10 @@ class Window(tk.Tk):
             self.__set_inputs_access(False)
 
             # Create a generation
-            generation = Generation(self.__note_book, params)
+            try :
+                generation = Generation(self.__note_book, params)
+            except Exception as err :
+                print("Error : " + str(err))
 
             # New notebook tab
             self.__note_book.add(generation.get_frame(), text=params["title"])
