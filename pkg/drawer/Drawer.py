@@ -50,10 +50,9 @@ class Drawer:
         queue = self.__drawing_instructions
 
         # The lines below are just FOR TESTING
-        for _ in range(100):
-        
-            for _ in range(4) :
-                queue.put("square")
+
+        for _ in range(4) :
+            queue.put("square")
 
         queue.put(False)
 
