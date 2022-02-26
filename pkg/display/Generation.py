@@ -33,7 +33,7 @@ class Generation :
         self.drawer.start()
         # Activate the buttons after the generation is done.
         self.get_frame().nametowidget("buttons_frame.delete_button").state(["!disabled"])
-        self.get_frame().nametowidget("buttons_frame.delete_button").state(["!disabled"])
+        self.get_frame().nametowidget("buttons_frame.save_button").state(["!disabled"])
 
 
 

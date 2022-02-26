@@ -2,7 +2,6 @@ from typing import Tuple
 from tkinter import Canvas
 import random as ra, turtle as tu
 from queue import Queue
-from time import sleep
 from threading import Thread
 
 class Drawer:

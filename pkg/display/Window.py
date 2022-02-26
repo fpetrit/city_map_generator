@@ -60,7 +60,7 @@ class Window(tk.Tk):
         # Build the title frame
         title_frame = ttk.Frame(first_frame, name="app_title")
         title_frame.pack(fill="both", side="top", pady=25)
-        ttk.Label(title_frame, name="h1", text="Imaginary Town Planner", font=("Abadi", 25)).pack(side="top", pady=5)
+        ttk.Label(title_frame, name="h1", text="City map generator", font=("Abadi", 25)).pack(side="top", pady=5)
         ttk.Label(title_frame, name="h2", text="Please choose your settings", font=("Abadi", 13)).pack(side="top", pady=5)
 
         # Build the paramerters frame
@@ -94,12 +94,9 @@ class Window(tk.Tk):
         self.ttk_inputs : Dict[ str, List[Union[ttk.Widget, str]] ] = {
 
             "inhabitant per km²" : [ ttk.Entry(ttk.Frame(master), validate="focus", validatecommand=is_nonzero_real, invalidcommand=invalidcommand), "Value must be a strictly positive real number"],
-            "width" : [ttk.Entry(ttk.Frame(master), validate="focus",validatecommand=is_nonzero_real, invalidcommand=invalidcommand ), "AAA"],
-            "height" : [ttk.Entry(ttk.Frame(master), validate="focus",validatecommand=is_nonzero_real, invalidcommand=invalidcommand ), "AAAA"],
-            "title" : [ttk.Entry(ttk.Frame(master), validate="focus", validatecommand=validcommand), ""],
-            "other3" : [ttk.Entry(ttk.Frame(master)), ""],
-            "other4" : [ttk.Entry(ttk.Frame(master)), ""],
-            "other5" : [ttk.Entry(ttk.Frame(master)), ""],            
+            "width" : [ttk.Entry(ttk.Frame(master), validate="focus",validatecommand=is_nonzero_real, invalidcommand=invalidcommand ), "Not a valid width"],
+            "height" : [ttk.Entry(ttk.Frame(master), validate="focus",validatecommand=is_nonzero_real, invalidcommand=invalidcommand ), "Not a valid height"],
+            "title" : [ttk.Entry(ttk.Frame(master), validate="focus", validatecommand=validcommand), ""]           
         }
 
         # Operations for each input : creation of an individual frame, placement, creation of 2 labels (title and eventual error)
