@@ -22,7 +22,6 @@ class Window(tk.Tk):
         self.size = winsize
         self.iconbitmap("./assets/plan_ville.ico")
         self.theme_color = theme_color
-        self.__canvas : List[tk.Canvas] = []
         self.minsize(winsize[0], winsize[1])
         self.config(bg=self.theme_color)
 
@@ -239,16 +238,13 @@ class Window(tk.Tk):
         print(params)
 
         # If the inputs are valid and if there are less than 5 five generations
-        if params and len(self.__canvas) < 5 :
+        if params and Generation.instances_total_number < 6 :
             
             # Disable the inputs
             self.__set_inputs_access(False)
 
             # Create a generation
-            try :
-                generation = Generation(self.__note_book, params)
-            except Exception as err :
-                print("Error : " + str(err))
+            generation = Generation(self.__note_book, params)
 
             # New notebook tab
             self.__note_book.add(generation.get_frame(), text=params["title"])

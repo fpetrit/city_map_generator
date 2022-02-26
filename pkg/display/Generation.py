@@ -18,21 +18,22 @@ class Generation :
     # We count the instantiations to limit their number.
     instances_total_number = 0
 
-    
 
-    
 
     def __init__(self, master, parameters : Dict[str, str]) -> None :
         Generation.instances_total_number += 1
         self.parameters = parameters
-        self.drawer = Drawer(self.canvas, self.parameters)
         self.__frame = self.__layout(master)
-
+        self.drawer = Drawer(self.canvas, self.parameters)
 
 
     def start(self) -> None :
         """Starts the generation : blocking until the end."""
+        # Start the drawer
         self.drawer.start()
+        # Activate the buttons after the generation is done.
+        self.get_frame().nametowidget("buttons_frame.delete_button").state(["!disabled"])
+        self.get_frame().nametowidget("buttons_frame.delete_button").state(["!disabled"])
 
 
 
@@ -69,9 +70,9 @@ class Generation :
         self.canvas.bind("<MouseWheel>", lambda event : self.canvas.yview_scroll(int(-1*(event.delta/120)), "units"))
 
         # Creations of buttons : delete generation, save as
-        buttons_frame = ttk.Frame(main_frame)
-        buttons = [ ttk.Button(buttons_frame, image=self.cross, name="delete_button", command=self.__delete_generation),
-                    ttk.Button(buttons_frame, image=self.download, name="save_button", command=self.__save_as) ]
+        buttons_frame = ttk.Frame(main_frame, name="buttons_frame")
+        buttons = [ ttk.Button(buttons_frame, image=self.cross, name="delete_button", command=self.__delete_generation, state="disabled"),
+                    ttk.Button(buttons_frame, image=self.download, name="save_button", command=self.__save_as, state="disabled") ]
         col = 0
         buttons_frame.grid_anchor("center")
         # Configuration with a loop
@@ -94,9 +95,6 @@ class Generation :
 
     def __delete_generation(self) -> None :
         """Deletes the generation."""
-        self.drawer.permission = False
-        while self.drawer.is_working != False :
-            pass
         self.get_frame().destroy()
 
 
@@ -106,11 +104,11 @@ class Generation :
         types = [("postscript file", ".ps"), ("All file", "*")]
         file = fd.asksaveasfilename(title = APP_TITLE + " - " "Save your generation as...", initialfile = self.parameters["title"], defaultextension = "ps", filetypes = types)
         self.canvas.postscript(file=file, colormode="color")
+    
         
-        
-        
-        
-        
-        
-        
-        
+
+    # Save parameters ?
+
+
+
+    # Bit-mapped images conversion ?
