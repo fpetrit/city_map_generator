@@ -4,6 +4,8 @@ import random as ra, turtle as tu
 from queue import Queue
 from threading import Thread
 
+from pkg.drawing.drawable.House import House
+
 class Drawer:
     """
     Draw a randomly generated 2D town plan when start() is called (blocking function), on the given tkinter canvas and parameters passed when instantiating.
@@ -16,6 +18,7 @@ class Drawer:
         self.parameters = parameters
         self.__ts = tu.TurtleScreen(canvas)
         self.__turtle = tu.RawTurtle(self.__ts)
+        self.__turtle.speed(0)
 
 
 
@@ -50,8 +53,8 @@ class Drawer:
 
         # The lines below are just FOR TESTING
 
-        for _ in range(4) :
-            queue.put("square")
+        for _ in range(20) :
+            queue.put("house")
 
         queue.put(False)
 
@@ -64,6 +67,7 @@ class Drawer:
         tu = self.__turtle
         params = self.parameters
         instruction = -1
+        coordinates_system = [0, int(params["width"]), 0, int(params["height"])]
 
         self.__ts.setworldcoordinates(0, 0, int(params["width"]), int(params["height"]))
 
@@ -74,12 +78,10 @@ class Drawer:
 
             # Switch with if, elif, ..., else
 
-            if instruction == "square" :
-                tu.up()
-                tu.goto(Drawer.get_random_tuple(0, int(params["width"]) - 50, 50, int(params["height"])))
-                tu.down()
-                tu.setheading(0)
-                for i in range(4) :
-                    tu.right(90)
-                    tu.forward(50)
+            # Determine a width, a heigth
+            if instruction == "house" :
+
+                
+                place = [(self.get_random_tuple(*coordinates_system), self.get_random_tuple(*coordinates_system))]
+                House(places = place).draw(tu)
 

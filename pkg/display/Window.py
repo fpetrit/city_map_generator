@@ -84,6 +84,7 @@ class Window(tk.Tk):
 
         # Register the needed validity-test callback(s) (validation callbacks), if it returns False, the error callback is called
         is_nonzero_real = ( self.register(self.__is_positive_real), "%P", "%W" )
+        match_value = ( self.register(self.__match_value), "%P", "%W" )
 
 
         # Creation of inputs widgets, each have their own frame
@@ -93,10 +94,11 @@ class Window(tk.Tk):
         #          }
         self.ttk_inputs : Dict[ str, List[Union[ttk.Widget, str]] ] = {
 
+            "title" : [ttk.Entry(ttk.Frame(master), validate="focus", validatecommand=validcommand), ""],
             "inhabitant per km²" : [ ttk.Entry(ttk.Frame(master), validate="focus", validatecommand=is_nonzero_real, invalidcommand=invalidcommand), "Value must be a strictly positive real number"],
             "width" : [ttk.Entry(ttk.Frame(master), validate="focus",validatecommand=is_nonzero_real, invalidcommand=invalidcommand ), "Not a valid width"],
             "height" : [ttk.Entry(ttk.Frame(master), validate="focus",validatecommand=is_nonzero_real, invalidcommand=invalidcommand ), "Not a valid height"],
-            "title" : [ttk.Entry(ttk.Frame(master), validate="focus", validatecommand=validcommand), ""]           
+            "biome" : [ttk.Combobox(ttk.Frame(master), values=["desert"], validate="focus", validatecommand=match_value, invalidcommand=invalidcommand), "Choose a biome"]
         }
 
         # Operations for each input : creation of an individual frame, placement, creation of 2 labels (title and eventual error)
@@ -171,10 +173,11 @@ class Window(tk.Tk):
         """Sets the access state of the ttk inputs AND the buttons (usefull when a generation starts for example)
            True : availables, False : disabled."""
 
-        state = "!disabled" if are_available else "disabled"
+        state = "!readonly" if are_available else "readonly"
+        buttons_state = "!disabled" if are_available else "disabled"
 
         # Update the generate button state
-        self.nametowidget(".container.note_book.first_frame.parameters.generate_button").state([state]) 
+        self.nametowidget(".container.note_book.first_frame.parameters.generate_button").state([buttons_state]) 
         # Update the state of each input
         for key in self.ttk_inputs :
             self.ttk_inputs[key][0].state([state])
@@ -224,6 +227,17 @@ class Window(tk.Tk):
 
         except:
             return result
+    
+
+
+    def __match_value(self, input : str, widget_name) -> bool :
+        """An input validation callback. Must be used only to check widgets having a 'values' instance attribute."""
+        w : ttk.Combobox = self.nametowidget(widget_name)
+        test = False
+        if  input in w["values"] :
+            self.__valid_value_callback(widget_name)
+            test = True
+        return test
 
 
 
@@ -244,7 +258,7 @@ class Window(tk.Tk):
             generation = Generation(self.__note_book, params)
 
             # New notebook tab
-            self.__note_book.add(generation.get_frame(), text=params["title"])
+            self.__note_book.add(generation.frame, text=params["title"])
             
             
             # Start the generation : blocking

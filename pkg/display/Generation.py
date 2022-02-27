@@ -1,5 +1,5 @@
 from ..config.config import *
-from ..drawer.Drawer import Drawer
+from ..drawing.Drawer import Drawer
 
 import tkinter as tk
 from tkinter import ttk, filedialog as fd
@@ -32,13 +32,14 @@ class Generation :
         # Start the drawer
         self.drawer.start()
         # Activate the buttons after the generation is done.
-        self.get_frame().nametowidget("buttons_frame.delete_button").state(["!disabled"])
-        self.get_frame().nametowidget("buttons_frame.save_button").state(["!disabled"])
+        self.frame.nametowidget("buttons_frame.delete_button").state(["!disabled"])
+        self.frame.nametowidget("buttons_frame.save_button").state(["!disabled"])
 
 
 
-    def get_frame(self) -> ttk.Frame :
-        """Returns the main frame."""
+    @property
+    def frame(self) -> ttk.Frame :
+        """The main frame."""
         return self.__frame
 
 
@@ -95,7 +96,7 @@ class Generation :
 
     def __delete_generation(self) -> None :
         """Deletes the generation."""
-        self.get_frame().destroy()
+        self.frame.destroy()
 
 
 
