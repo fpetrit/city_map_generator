@@ -5,6 +5,7 @@ from queue import Queue
 from threading import Thread
 
 from pkg.drawing.drawable.House import House
+from pkg.config.config import *
 
 class Drawer:
     """
@@ -14,9 +15,10 @@ class Drawer:
     """
 
     def __init__(self, canvas : Canvas, parameters : dict) -> None :
-        canvas = canvas
         self.parameters = parameters
         self.__ts = tu.TurtleScreen(canvas)
+        # Unleash the turtle's speed : set the 'actions per refresh' number, and the delay
+        self.__ts.tracer(ACTIONS_PER_SCREEN_REFRESH, DELAY)
         self.__turtle = tu.RawTurtle(self.__ts)
         self.__turtle.speed(0)
 
