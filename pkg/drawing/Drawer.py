@@ -1,8 +1,8 @@
+import pkg.config as conf
+
 from typing import Tuple
 from tkinter import Canvas
 import random as ra, turtle as tu
-
-from pkg.config.config import *
 
 
 
@@ -17,7 +17,7 @@ class Drawer:
         self.parameters = parameters
         self._ts = tu.TurtleScreen(canvas)
         # Unleash the turtle's speed : set the 'actions per refresh' number, and the delay
-        self._ts.tracer(ACTIONS_PER_SCREEN_REFRESH, DELAY)
+        self._ts.tracer(conf.ACTIONS_PER_SCREEN_REFRESH, conf.DELAY)
         self._turtle = tu.RawTurtle(self._ts)
         self._turtle.speed(0)
 

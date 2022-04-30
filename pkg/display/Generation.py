@@ -1,5 +1,5 @@
-from ..config.config import *
-from ..drawing.Drawer import Drawer
+import pkg.config as conf
+from pkg.drawing import Drawer
 
 import tkinter as tk
 from tkinter import ttk, filedialog as fd
@@ -103,7 +103,7 @@ class Generation :
     def __save_as(self) :
         """Opens a file dialog and save the genertion."""
         types = [("postscript file", ".ps"), ("All file", "*")]
-        file = fd.asksaveasfilename(title = APP_TITLE + " - " "Save your generation as...", initialfile = self.parameters["title"], defaultextension = "ps", filetypes = types)
+        file = fd.asksaveasfilename(title = conf.APP_TITLE + " - " "Save your generation as...", initialfile = self.parameters["title"], defaultextension = "ps", filetypes = types)
         self.canvas.postscript(file=file, colormode="color")
     
         

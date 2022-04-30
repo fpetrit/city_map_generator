@@ -1,4 +1,4 @@
-from ..config.config import *
+import pkg.config as conf
 from .Generation import *
 
 import tkinter as tk
@@ -16,9 +16,9 @@ class Window(tk.Tk):
 
 
 
-    def __init__(self, winsize : Tuple[int, int], theme_color = APP_THEME_COLOR):
+    def __init__(self, winsize : Tuple[int, int], theme_color = conf.APP_THEME_COLOR):
         super().__init__()
-        self.title(APP_TITLE)
+        self.title(conf.APP_TITLE)
         self.size = winsize
         self.iconbitmap("./assets/plan_ville.ico")
         self.theme_color = theme_color
